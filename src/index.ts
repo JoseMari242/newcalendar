@@ -244,6 +244,11 @@ function closeAndResetModal() {
   description.value = "";
   checkRemindDate.checked = false;
   checkEndDate.checked = false;
+  eventTitle.style.border = '';
+  initialDate.style.border = '';
+  endDate.style.border = '';
+  reminderSelect.style.border = '';
+  description.style.border = '';
 }
 
 
