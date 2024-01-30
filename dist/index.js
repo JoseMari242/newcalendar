@@ -23,7 +23,7 @@ const createBtnForEachDay = (currentYear, currentMonth, i) => {
     }
     const eventBtn = document.createElement('button');
     eventBtn.innerText = "Add Event";
-    eventBtn.classList.add('eventDay');
+    eventBtn.classList.add('eventDay', 'hidden');
     eventBtn.addEventListener('click', () => {
         newEventModal.classList.add('active');
         newEventModal.focus();
@@ -55,12 +55,38 @@ function renderCalendar() {
             const eventDate = new Date(event.initialDate);
             return eventDate.getDate() === i && eventDate.getMonth() === currentMonth && eventDate.getFullYear() === currentYear;
         });
+        // Adds a mouseover event for each day to show the button
+        dayElement.addEventListener('mouseover', () => {
+            eventBtn.classList.remove('hidden');
+        });
+        // Adds a mouseover event for each day to show the button
+        dayElement.addEventListener('mouseout', () => {
+            eventBtn.classList.add('hidden');
+        });
         if (eventsForDay.length > 0) {
             dayElement.classList.add('event-day');
             const eventText = document.createElement('div');
-            eventText.classList.add('event-text');
-            eventText.innerText = eventsForDay.map(event => event.eventTitle).join(', ');
+            eventText.classList.add('event-text', 'hoverable'); // Agrega la clase hoverable
+            eventText.innerText = eventsForDay.map(event => event.eventTitle).join('\n');
             dayElement.appendChild(eventText);
+            const eventDetails = document.createElement('p');
+            eventDetails.classList.add('hide');
+            eventDetails.innerText = eventsForDay.map(event => {
+                return `${event.eventTitle} \n ${event === null || event === void 0 ? void 0 : event.description} \n ${event.initialDate} \n ${event === null || event === void 0 ? void 0 : event.checkEndDate} \n ${event.eventType}`;
+            }).join('\n');
+            dayElement.appendChild(eventDetails);
+            const hoverableElements = document.querySelectorAll('.hoverable');
+            // Agrega eventos de mouse a cada elemento hoverable
+            hoverableElements.forEach(hoverableElement => {
+                hoverableElement.addEventListener('mouseover', () => {
+                    const eventDetails = hoverableElement.nextElementSibling;
+                    eventDetails === null || eventDetails === void 0 ? void 0 : eventDetails.classList.remove('hide');
+                });
+                hoverableElement.addEventListener('mouseout', () => {
+                    const eventDetails = hoverableElement.nextElementSibling;
+                    eventDetails === null || eventDetails === void 0 ? void 0 : eventDetails.classList.add('hide');
+                });
+            });
         }
         if (i === presentDay && presentMonth === currentMonth && presentYear === currentYear) {
             dayElement.classList.add('presentDay');

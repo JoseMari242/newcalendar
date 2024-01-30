@@ -170,3 +170,6 @@ button:hover {
   margin-top: 2px;
 }
 
+.eventDay.hidden {
+  display: none;
+}
