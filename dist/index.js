@@ -10,95 +10,27 @@ const highlightPresentDate = () => {
     };
     return presentDate;
 };
-/*function renderCalendar(): void {
-  const {currentMonth, currentYear} = variables;
-  const {calendarDays, currentMonthElement} = domVariables;
-
-  const firstDayOfMonth: number = new Date(currentYear, currentMonth, 1).getDay();
-  const daysInMonth: number = new Date(currentYear, currentMonth + 1, 0).getDate();
-  calendarDays.innerHTML = '';
-
-  const presentTime: ActualTime = highlightPresentDate();
-  const {presentDay, presentMonth, presentYear} = presentTime;
-  
-
-  for (let i = 0; i < firstDayOfMonth; i++) {
-      const dayElement = document.createElement('div');
-      dayElement.classList.add('day', 'empty');
-      calendarDays.appendChild(dayElement);
-  }
-
-  for (let i = 1; i <= daysInMonth; i++) {
-      const dayElement = document.createElement('div');
-      dayElement.classList.add('day');
-      dayElement.innerText = i.toString();
-      if (dayElement.innerText === presentDay.toString() && presentMonth === currentMonth && presentYear === currentYear ) {
-        dayElement.classList.add('presentDay');
-      }
-      calendarDays.appendChild(dayElement);
-  }
-  currentMonthElement.innerText = `${Months[currentMonth]} ${currentYear}`;
-
-
-  const events = getEventsFromLocalStorage();
-
-  for (const event of events) {
-    // Agregar lógica para mostrar eventos en el calendario.
-    // Por ejemplo, puedes resaltar el día del evento.
-    // Puedes modificar este código según tu estructura de eventos y calendario.
-    const eventDate = new Date(event.initialDate);
-    const dayElements = document.querySelectorAll('.day');
-    for (const dayElement of dayElements) {
-      if (parseInt(dayElement.innerText, 10) === eventDate.getDate()) {
-        dayElement.classList.add('event-day');
-      }
+const createBtnForEachDay = (currentYear, currentMonth, i) => {
+    const { initialDate } = domVariables;
+    let currentMonthAsString = `${currentMonth + 1}`;
+    console.log(currentMonthAsString);
+    let currentDayAsString = `${i}`;
+    if (currentMonth + 1 < 10) {
+        currentMonthAsString = "0" + (currentMonth + 1).toString();
     }
-  }
-
-}*/
-/*function renderCalendar(): void {
-  const { currentMonth, currentYear } = variables;
-  const { calendarDays, currentMonthElement } = domVariables;
-
-  const firstDayOfMonth: number = new Date(currentYear, currentMonth, 1).getDay();
-  const daysInMonth: number = new Date(currentYear, currentMonth + 1, 0).getDate();
-  calendarDays.innerHTML = '';
-
-  const presentTime: ActualTime = highlightPresentDate();
-  const { presentDay, presentMonth, presentYear } = presentTime;
-
-  for (let i = 0; i < firstDayOfMonth; i++) {
-    const dayElement = document.createElement('div');
-    dayElement.classList.add('day', 'empty');
-    calendarDays.appendChild(dayElement);
-  }
-
-  const events = getEventsFromLocalStorage();
-
-
-  for (let i = 1; i <= daysInMonth; i++) {
-    const dayElement = document.createElement('div');
-    dayElement.classList.add('day');
-    dayElement.innerText = i.toString();
-
-    
-    // Verifica si hay eventos para este día y agrega la clase 'event-day'
-    const eventsForDay = events.filter(event => {
-      const eventDate = new Date(event.initialDate);
-      return eventDate.getDate() === i && eventDate.getMonth() === currentMonth && eventDate.getFullYear() === currentYear;
+    if (i < 10) {
+        currentDayAsString = "0" + i;
+    }
+    const eventBtn = document.createElement('button');
+    eventBtn.innerText = "Add Event";
+    eventBtn.classList.add('eventDay');
+    eventBtn.addEventListener('click', () => {
+        newEventModal.classList.add('active');
+        newEventModal.focus();
+        initialDate.value = `${currentYear}-${currentMonthAsString}-${currentDayAsString}T12:00`;
     });
-
-    if (eventsForDay.length > 0) {
-      dayElement.classList.add('event-day');
-    }
-
-      if (dayElement.innerText === presentDay.toString() && presentMonth === currentMonth && presentYear === currentYear ) {
-        dayElement.classList.add('presentDay');
-      }
-      calendarDays.appendChild(dayElement);
-    }
-  currentMonthElement.innerText = `${Months[currentMonth]} ${currentYear}`;
-}*/
+    return eventBtn;
+};
 function renderCalendar() {
     const { currentMonth, currentYear } = variables;
     const { calendarDays, currentMonthElement } = domVariables;
@@ -115,6 +47,7 @@ function renderCalendar() {
     const events = getEventsFromLocalStorage();
     for (let i = 1; i <= daysInMonth; i++) {
         const dayElement = document.createElement('div');
+        const eventBtn = createBtnForEachDay(currentYear, currentMonth, i);
         dayElement.classList.add('day');
         dayElement.innerText = i.toString();
         // Verifica si hay eventos para este día y agrega la clase 'event-day'
@@ -133,6 +66,7 @@ function renderCalendar() {
             dayElement.classList.add('presentDay');
         }
         calendarDays.appendChild(dayElement);
+        dayElement.appendChild(eventBtn);
     }
     currentMonthElement.innerText = `${Months[currentMonth]} ${currentYear}`;
 }
@@ -163,24 +97,6 @@ addEventButton.addEventListener('click', () => {
     newEventModal.classList.add('active');
     newEventModal.focus();
 });
-/*saveButton.addEventListener('click', () => {
-  const formVerification = checkForm();
-  if (formVerification) {
-    objectCreation();
-    localStorage.setItem('event', JSON.stringify(objectCreation()));
-    if (objectCreation().reminderSelect) {
-      const remindDate = getReminderDate();
-      setInterval(() => {
-        checkReminder(remindDate);
-      }, 10000)
-    }
-    ///añadir evento al día
-    renderCalendar();
-    closeAndResetModal();
-  } else {
-    highlightIncompleteFields();
-  }
-});*/
 saveButton.addEventListener('click', () => {
     const formVerification = checkForm();
     if (formVerification) {
@@ -339,12 +255,3 @@ function highlightIncompleteFields() {
         resetFieldStyle(description);
     }
 }
-//const submitEvent = () => {
-//   const {eventTitle, initialDate, endDate, eventType, description,} = domVariables;
-// }
-// event.preventDefault();
-//   localStorage.setItem('eventTitle', title.value);
-//   localStorage.setItem('eventInitialDate', initialDate.value);
-//   localStorage.setItem('eventEndDate', endDate.value);
-//   localStorage.setItem('eventEventType', eventType.value);
-//   localStorage.setItem('eventDescription', description.value);

@@ -13,96 +13,27 @@ const highlightPresentDate = (): ActualTime => {
   return presentDate;
 }
 
-/*function renderCalendar(): void {
-  const {currentMonth, currentYear} = variables;
-  const {calendarDays, currentMonthElement} = domVariables;
-
-  const firstDayOfMonth: number = new Date(currentYear, currentMonth, 1).getDay();
-  const daysInMonth: number = new Date(currentYear, currentMonth + 1, 0).getDate();
-  calendarDays.innerHTML = '';
-
-  const presentTime: ActualTime = highlightPresentDate();
-  const {presentDay, presentMonth, presentYear} = presentTime;
-  
-
-  for (let i = 0; i < firstDayOfMonth; i++) {
-      const dayElement = document.createElement('div');
-      dayElement.classList.add('day', 'empty');
-      calendarDays.appendChild(dayElement);
+const createBtnForEachDay = (currentYear: number, currentMonth: number, i: number): HTMLButtonElement => {
+  const {initialDate} = domVariables;
+  let currentMonthAsString: string = `${currentMonth + 1}`;
+  console.log(currentMonthAsString)
+  let currentDayAsString: string = `${i}`;
+  if (currentMonth + 1 < 10) {
+    currentMonthAsString = "0" + (currentMonth + 1).toString();
   }
-
-  for (let i = 1; i <= daysInMonth; i++) {
-      const dayElement = document.createElement('div');
-      dayElement.classList.add('day');
-      dayElement.innerText = i.toString();
-      if (dayElement.innerText === presentDay.toString() && presentMonth === currentMonth && presentYear === currentYear ) {
-        dayElement.classList.add('presentDay');
-      }
-      calendarDays.appendChild(dayElement);
+  if (i < 10) {
+    currentDayAsString = "0" + i;
   }
-  currentMonthElement.innerText = `${Months[currentMonth]} ${currentYear}`;
-
-
-  const events = getEventsFromLocalStorage();
-
-  for (const event of events) {
-    // Agregar lógica para mostrar eventos en el calendario.
-    // Por ejemplo, puedes resaltar el día del evento.
-    // Puedes modificar este código según tu estructura de eventos y calendario.
-    const eventDate = new Date(event.initialDate);
-    const dayElements = document.querySelectorAll('.day');
-    for (const dayElement of dayElements) {
-      if (parseInt(dayElement.innerText, 10) === eventDate.getDate()) {
-        dayElement.classList.add('event-day');
-      }
-    }
-  }
-
-}*/
-
-/*function renderCalendar(): void {
-  const { currentMonth, currentYear } = variables;
-  const { calendarDays, currentMonthElement } = domVariables;
-
-  const firstDayOfMonth: number = new Date(currentYear, currentMonth, 1).getDay();
-  const daysInMonth: number = new Date(currentYear, currentMonth + 1, 0).getDate();
-  calendarDays.innerHTML = '';
-
-  const presentTime: ActualTime = highlightPresentDate();
-  const { presentDay, presentMonth, presentYear } = presentTime;
-
-  for (let i = 0; i < firstDayOfMonth; i++) {
-    const dayElement = document.createElement('div');
-    dayElement.classList.add('day', 'empty');
-    calendarDays.appendChild(dayElement);
-  }
-
-  const events = getEventsFromLocalStorage();
-
-
-  for (let i = 1; i <= daysInMonth; i++) {
-    const dayElement = document.createElement('div');
-    dayElement.classList.add('day');
-    dayElement.innerText = i.toString();
-
-    
-    // Verifica si hay eventos para este día y agrega la clase 'event-day'
-    const eventsForDay = events.filter(event => {
-      const eventDate = new Date(event.initialDate);
-      return eventDate.getDate() === i && eventDate.getMonth() === currentMonth && eventDate.getFullYear() === currentYear;
-    });
-
-    if (eventsForDay.length > 0) {
-      dayElement.classList.add('event-day');
-    }
-
-      if (dayElement.innerText === presentDay.toString() && presentMonth === currentMonth && presentYear === currentYear ) {
-        dayElement.classList.add('presentDay');
-      }
-      calendarDays.appendChild(dayElement);
-    }
-  currentMonthElement.innerText = `${Months[currentMonth]} ${currentYear}`;
-}*/
+  const eventBtn = document.createElement('button');
+  eventBtn.innerText = "Add Event";
+  eventBtn.classList.add('eventDay');
+  eventBtn.addEventListener('click', () => {
+    newEventModal.classList.add('active');
+    newEventModal.focus();
+    initialDate.value = `${currentYear}-${currentMonthAsString}-${currentDayAsString}T12:00`;
+  })
+  return eventBtn;
+}
 
 function renderCalendar(): void {
   const { currentMonth, currentYear } = variables;
@@ -125,6 +56,7 @@ function renderCalendar(): void {
 
   for (let i = 1; i <= daysInMonth; i++) {
     const dayElement = document.createElement('div');
+    const eventBtn = createBtnForEachDay(currentYear, currentMonth, i);
     dayElement.classList.add('day');
     dayElement.innerText = i.toString();
 
@@ -147,6 +79,7 @@ function renderCalendar(): void {
     }
 
     calendarDays.appendChild(dayElement);
+    dayElement.appendChild(eventBtn);
   }
 
   currentMonthElement.innerText = `${Months[currentMonth]} ${currentYear}`;
@@ -190,24 +123,6 @@ addEventButton.addEventListener('click', () => {
   newEventModal.focus();
 });
 
-/*saveButton.addEventListener('click', () => {
-  const formVerification = checkForm();
-  if (formVerification) {
-    objectCreation();
-    localStorage.setItem('event', JSON.stringify(objectCreation()));
-    if (objectCreation().reminderSelect) {
-      const remindDate = getReminderDate();
-      setInterval(() => {
-        checkReminder(remindDate);
-      }, 10000)
-    }
-    ///añadir evento al día
-    renderCalendar();
-    closeAndResetModal();
-  } else {
-    highlightIncompleteFields();
-  }
-});*/
 
 saveButton.addEventListener('click', () => {
   const formVerification = checkForm();
@@ -342,12 +257,12 @@ function highlightIncompleteFields() {
   const { eventTitle, initialDate, endDateContainer, endDate, reminderContainer, reminderSelect, description } = domVariables;
 
   // Función para resaltar en rojo un campo
-  const highlightField = (field) => {
+  const highlightField = (field: HTMLFormElement) => {
     field.style.border = '2px solid red';
   };
 
   // Función para restaurar el estilo normal de un campo
-  const resetFieldStyle = (field) => {
+  const resetFieldStyle = (field: HTMLFormElement) => {
     field.style.border = '';
   };
 
@@ -383,14 +298,3 @@ function highlightIncompleteFields() {
   }
 }
 
-//const submitEvent = () => {
-  //   const {eventTitle, initialDate, endDate, eventType, description,} = domVariables;
-    
-  // }
-// event.preventDefault();
-
-//   localStorage.setItem('eventTitle', title.value);
-//   localStorage.setItem('eventInitialDate', initialDate.value);
-//   localStorage.setItem('eventEndDate', endDate.value);
-//   localStorage.setItem('eventEventType', eventType.value);
-//   localStorage.setItem('eventDescription', description.value);
