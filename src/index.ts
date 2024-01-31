@@ -233,8 +233,8 @@ saveButton.addEventListener('click', () => {
 
     if (newEvent.reminderSelect) {
       const remindDate = getReminderDate();
-      setInterval(() => {
-        checkReminder(remindDate);
+      const intervalId = setInterval(() => {
+        checkReminder(remindDate, newEvent, intervalId);
       }, 10000);
     }
 
@@ -267,10 +267,13 @@ const getReminderDate = (): object => {
     return reminderDate;
 }
 
-const checkReminder = (remindDate: object) => {
+const checkReminder = (remindDate: object, newEvent: Event, intervalId: number) => {
     const currentDate = new Date();
-    if (currentDate > remindDate) alert('yepa')
-    console.log( {remindDate}, {currentDate})
+    if (currentDate > remindDate) {
+      alert(`Event with title ${newEvent.eventTitle} will start at ${remindDate}`)
+      clearInterval(intervalId);
+    }
+    
 }
 
 

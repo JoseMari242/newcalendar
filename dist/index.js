@@ -186,8 +186,8 @@ saveButton.addEventListener('click', () => {
         localStorage.setItem('events', JSON.stringify(events));
         if (newEvent.reminderSelect) {
             const remindDate = getReminderDate();
-            setInterval(() => {
-                checkReminder(remindDate);
+            const intervalId = setInterval(() => {
+                checkReminder(remindDate, newEvent, intervalId);
             }, 10000);
         }
         // Añade evento al día en el calendario
@@ -213,11 +213,12 @@ const getReminderDate = () => {
     reminderDate.setDate(parseInt(day));
     return reminderDate;
 };
-const checkReminder = (remindDate) => {
+const checkReminder = (remindDate, newEvent, intervalId) => {
     const currentDate = new Date();
-    if (currentDate > remindDate)
-        alert('yepa');
-    console.log({ remindDate }, { currentDate });
+    if (currentDate > remindDate) {
+        alert(`Event with title ${newEvent.eventTitle} will start at ${remindDate}`);
+        clearInterval(intervalId);
+    }
 };
 const objectCreation = () => {
     const { eventTitle, initialDate, endDate, checkRemindDate, reminderSelect, description, eventType, checkEndDate } = domVariables;
