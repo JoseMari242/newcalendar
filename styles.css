@@ -167,7 +167,6 @@ button:hover {
 .day {
   padding: 0.3rem;
   text-align: center;
-  /*border: 0.1rem solid #eee;*/
   color: var(--font-for-months);
   transition: 0.3s;
   display: flex;
@@ -193,13 +192,6 @@ button:hover {
   font-weight: bold;
   box-shadow: 0.3 0.3 0.3 var(--calendar-shadow);
 }
-
-/* .event {
-  background-color: #28a745;
-  color: #fff;
-  border-radius: 3px;
-  padding: 2px;
-} 
 
 /* Modal New Event */
 
@@ -227,8 +219,6 @@ button:hover {
   font-weight: bold;
   color: #949471;
 }
-
-
 
 .modal__container h2 {
   margin-top: 3rem;
@@ -303,8 +293,8 @@ button:hover {
 
 .event-text {
   font-size: 0.8rem;
-  color: black; /* color del texto del evento */
-  background-color: var(--highlight-in-grey); /* color de fondo del texto del evento */
+  color: black; 
+  background-color: var(--highlight-in-grey); 
   padding: 0.1rem 0.2rem;
   border-radius: 0.3rem;
   margin-top: 0.1rem;
@@ -322,26 +312,20 @@ button:hover {
   margin: 0.8rem;
 }
 
-
-
 .event-day .event-text.past-event {
   background-color: gray;
   text-decoration: line-through;
 }
 
-
 .event-day .hide.past-event-details {
   display: none; 
 }
-
 
 .modal__container {
   display: flex;
   flex-direction: column;
   gap: 1rem;
 }
-
-
 
 .flip-scale-up-hor {
     -webkit-animation: rotate-center 0.6s ease-in-out both;
@@ -369,6 +353,3 @@ button:hover {
             transform: rotate(360deg);
   }
 }
-
-
-

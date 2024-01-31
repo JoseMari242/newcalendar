@@ -16,7 +16,6 @@ const highlightPresentDate = (): ActualTime => {
 const createBtnForEachDay = (currentYear: number, currentMonth: number, i: number): HTMLButtonElement => {
   const {initialDate} = domVariables;
   let currentMonthAsString: string = `${currentMonth + 1}`;
-  console.log(currentMonthAsString)
   let currentDayAsString: string = `${i}`;
   if (currentMonth + 1 < 10) {
     currentMonthAsString = "0" + (currentMonth + 1).toString();
@@ -35,6 +34,7 @@ const createBtnForEachDay = (currentYear: number, currentMonth: number, i: numbe
   return eventBtn;
 }
 
+//Function to render calendar
 function renderCalendar(): void {
   const { currentMonth, currentYear } = variables;
   const { calendarDays, currentMonthElement, eventDetailsModal } = domVariables;
@@ -60,38 +60,33 @@ function renderCalendar(): void {
     dayElement.classList.add('day');
     dayElement.innerText = i.toString();
 
-    // Verifica si hay eventos para este día y agrega la clase 'event-day'
+    // Checks if there are eventsfor that day and adds the class 'event-day'
     const eventsForDay = events.filter(event => {
       const eventDate = new Date(event.initialDate);
       return eventDate.getDate() === i && eventDate.getMonth() === currentMonth && eventDate.getFullYear() === currentYear;
     });
 
-// Adds a mouseover event for each day to show the button
-dayElement.addEventListener('mouseover', () => {
-  eventBtn.classList.remove('hidden');
-});
+    // Adds a mouseover event for each day to show the button
+    dayElement.addEventListener('mouseover', () => {
+      eventBtn.classList.remove('hidden');
+    });
 
-// Adds a mouseover event for each day to show the button
-dayElement.addEventListener('mouseout', () => {
-  eventBtn.classList.add('hidden');
-});
-
-
-
-  // Agrega una clase adicional para eventos pasados
+    // Adds a mouseover event for each day to show the button
+    dayElement.addEventListener('mouseout', () => {
+      eventBtn.classList.add('hidden');
+    });
 
     if (eventsForDay.length > 0) {
       dayElement.classList.add('event-day');
       const eventText = document.createElement('div');
       eventText.classList.add('event-text', 'hoverable'); 
 
-      // Agrega una clase adicional para eventos pasados
+  // Adds an aditional class for pass events
       const isPastEvent = eventsForDay.some(event => new Date(event.initialDate) < new Date());
       if (isPastEvent) {
       eventText.classList.add('past-event');
       }
-
-
+  // Code for the second modal (Details of event)
       eventText.innerText = eventsForDay.map(event => event.eventTitle).join('\n');
       eventText.addEventListener('click', () => {
        const { eventTitleDisplay, initialDateDisplay, endDateDisplay, descriptionDisplay, reminderDisplay, eventTypeDisplay } = domVariables;
@@ -110,9 +105,7 @@ dayElement.addEventListener('mouseout', () => {
        removeEventButton.addEventListener('click', () => {
         const eventTitleToRemove = eventTitleDisplay.innerText;
         removeEventFromLocalStorage(eventTitleToRemove);
-        console.log(`Evento "${eventTitleToRemove}" eliminado.`);
         const updatedEvents = getEventsFromLocalStorage();
-        console.log('Eventos actualizados:', updatedEvents);
         eventText.remove();
         closeAndResetModalTwo();
        })
@@ -128,7 +121,6 @@ dayElement.addEventListener('mouseout', () => {
         eventDetails.classList.add('past-event-details');
       }
 
-
       eventDetails.innerText = eventsForDay.map(event => {
         return `${event.eventTitle} \n ${event?.description} \n ${event.initialDate} \n ${event?.checkEndDate} \n ${event.eventType}`;
       }).join('\n');
@@ -136,7 +128,7 @@ dayElement.addEventListener('mouseout', () => {
       
       const hoverableElements = document.querySelectorAll('.hoverable');
 
-      // Agrega eventos de mouse a cada elemento hoverable
+      // Adds mouse events for each hoverable element
       hoverableElements.forEach(hoverableElement => {
         hoverableElement.addEventListener('mouseover', () => {
           const eventDetails = hoverableElement.nextElementSibling;
@@ -162,8 +154,8 @@ dayElement.addEventListener('mouseout', () => {
 
   currentMonthElement.innerText = `${Months[currentMonth]} ${currentYear}`;
 }
-
 renderCalendar();
+
 
 function removeEventFromLocalStorage(eventTitle: string): void {
   const events = getEventsFromLocalStorage();
@@ -171,6 +163,7 @@ function removeEventFromLocalStorage(eventTitle: string): void {
   localStorage.setItem('events', JSON.stringify(updatedEvents));
 }
 
+// Buttons for previous month and next month
 const checkPreviousBtn = (): void => {
   variables.currentMonth = variables.currentMonth === 0 ? 11 : variables.currentMonth - 1;
   if (variables.currentMonth === 11) {
@@ -187,6 +180,7 @@ const checkNextBtn = (): void => {
 
 const {prevBtn, nextBtn, calendarDays, removeEventButton} = domVariables;
 
+// Adds animation
 prevBtn.addEventListener('click', () => {
   checkPreviousBtn();
   calendarDays.classList.remove('flip-scale-up-hor');
@@ -195,9 +189,6 @@ prevBtn.addEventListener('click', () => {
     calendarDays.classList.add('flip-scale-up-hor');
   }, 0);
 });
-
-
-
 
 nextBtn.addEventListener('click', () => {
   checkNextBtn();
@@ -212,23 +203,22 @@ nextBtn.addEventListener('click', () => {
 const {newEventModal, cancelButton, addEventButton, saveButton, closeModalButton, checkEndDate, 
   endDateContainer, reminderContainer, checkRemindDate, reminderSelect, description, closeModalButtonTwo, eventDetailsModal} = domVariables;
 
+// Shows modal
 addEventButton.addEventListener('click', () => {
   newEventModal.classList.add('active');
   newEventModal.focus();
 });
-
 
 saveButton.addEventListener('click', () => {
   const formVerification = checkForm();
   if (formVerification) {
     const newEvent = objectCreation();
     const events = getEventsFromLocalStorage();
-    console.log(events);
 
-    // Agrega el nuevo evento al arreglo de eventos
+    // Adds the new event to the event array
     events.push(newEvent);
   
-    // Guarda el arreglo de eventos actualizado en localStorage
+    // Saves in localstorage
     localStorage.setItem('events', JSON.stringify(events));
 
     if (newEvent.reminderSelect) {
@@ -238,14 +228,13 @@ saveButton.addEventListener('click', () => {
       }, 10000);
     }
 
-    // Añade evento al día en el calendario
+    // Adds the event to the calendar
     renderCalendar();
     closeAndResetModal();
   } else {
     highlightIncompleteFields();
   }
 });
-
 
 
 const getReminderDate = (): object => {
@@ -276,7 +265,7 @@ const checkReminder = (remindDate: object, newEvent: Event, intervalId: number) 
     
 }
 
-
+// Creates object 
 const objectCreation = ():Event => {
   const {eventTitle, initialDate, endDate, checkRemindDate, reminderSelect, description, eventType, checkEndDate} = domVariables;
   const newEvent: Event = {
@@ -292,9 +281,11 @@ const objectCreation = ():Event => {
   return newEvent;
 }
 
+// Events for closing both modals
 cancelButton.addEventListener('click', closeAndResetModal);
 
 closeModalButton.addEventListener('click', closeAndResetModal);
+
 closeModalButtonTwo.addEventListener('click', closeAndResetModalTwo);
 
 newEventModal.addEventListener('click', (event) => {
@@ -321,7 +312,7 @@ eventDetailsModal.addEventListener('keydown', (event) => {
   }
 });
 
-//event checkbox
+// Event checkbox
 checkEndDate.addEventListener('change', () => {
   if (endDateContainer.classList.contains('hide')){
     endDateContainer.classList.remove('hide');
@@ -333,6 +324,7 @@ checkRemindDate.addEventListener('change', () => {
     reminderContainer.classList.remove('hide');
   } else reminderContainer.classList.add('hide');
 })
+
 
 function checkForm() {  
   const {eventTitle, initialDate, endDate} = domVariables;
@@ -373,29 +365,26 @@ function closeAndResetModalTwo() {
 }
 
 
-
-
-
 function getEventsFromLocalStorage(): Event[] {
   const eventsString = localStorage.getItem('events');
   return eventsString ? JSON.parse(eventsString) : [];
 }
 
-
+// Function that highlights the incomplete/not valid fields in form
 function highlightIncompleteFields() {
   const { eventTitle, initialDate, endDateContainer, endDate, reminderContainer, reminderSelect, description } = domVariables;
 
-  // Función para resaltar en rojo un campo
+  // Highlights in red
   const highlightField = (field: HTMLFormElement) => {
     field.style.border = '2px solid red';
   };
 
-  // Función para restaurar el estilo normal de un campo
+  // Restores the style
   const resetFieldStyle = (field: HTMLFormElement) => {
     field.style.border = '';
   };
 
-  // Lógica para resaltar campos incompletos
+  // Incomplete fields
   if (!eventTitle.value || eventTitle.value.length > 60) {
     highlightField(eventTitle);
   } else {
