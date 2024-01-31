@@ -13,7 +13,6 @@ const highlightPresentDate = () => {
 const createBtnForEachDay = (currentYear, currentMonth, i) => {
     const { initialDate } = domVariables;
     let currentMonthAsString = `${currentMonth + 1}`;
-    console.log(currentMonthAsString);
     let currentDayAsString = `${i}`;
     if (currentMonth + 1 < 10) {
         currentMonthAsString = "0" + (currentMonth + 1).toString();
@@ -31,6 +30,7 @@ const createBtnForEachDay = (currentYear, currentMonth, i) => {
     });
     return eventBtn;
 };
+//Function to render calendar
 function renderCalendar() {
     const { currentMonth, currentYear } = variables;
     const { calendarDays, currentMonthElement, eventDetailsModal } = domVariables;
@@ -50,7 +50,7 @@ function renderCalendar() {
         const eventBtn = createBtnForEachDay(currentYear, currentMonth, i);
         dayElement.classList.add('day');
         dayElement.innerText = i.toString();
-        // Verifica si hay eventos para este día y agrega la clase 'event-day'
+        // Checks if there are eventsfor that day and adds the class 'event-day'
         const eventsForDay = events.filter(event => {
             const eventDate = new Date(event.initialDate);
             return eventDate.getDate() === i && eventDate.getMonth() === currentMonth && eventDate.getFullYear() === currentYear;
@@ -63,16 +63,16 @@ function renderCalendar() {
         dayElement.addEventListener('mouseout', () => {
             eventBtn.classList.add('hidden');
         });
-        // Agrega una clase adicional para eventos pasados
         if (eventsForDay.length > 0) {
             dayElement.classList.add('event-day');
             const eventText = document.createElement('div');
             eventText.classList.add('event-text', 'hoverable');
-            // Agrega una clase adicional para eventos pasados
+            // Adds an aditional class for pass events
             const isPastEvent = eventsForDay.some(event => new Date(event.initialDate) < new Date());
             if (isPastEvent) {
                 eventText.classList.add('past-event');
             }
+            // Code for the second modal (Details of event)
             eventText.innerText = eventsForDay.map(event => event.eventTitle).join('\n');
             eventText.addEventListener('click', () => {
                 const { eventTitleDisplay, initialDateDisplay, endDateDisplay, descriptionDisplay, reminderDisplay, eventTypeDisplay } = domVariables;
@@ -94,9 +94,7 @@ function renderCalendar() {
                 removeEventButton.addEventListener('click', () => {
                     const eventTitleToRemove = eventTitleDisplay.innerText;
                     removeEventFromLocalStorage(eventTitleToRemove);
-                    console.log(`Evento "${eventTitleToRemove}" eliminado.`);
                     const updatedEvents = getEventsFromLocalStorage();
-                    console.log('Eventos actualizados:', updatedEvents);
                     eventText.remove();
                     closeAndResetModalTwo();
                 });
@@ -114,7 +112,7 @@ function renderCalendar() {
             }).join('\n');
             dayElement.appendChild(eventDetails);
             const hoverableElements = document.querySelectorAll('.hoverable');
-            // Agrega eventos de mouse a cada elemento hoverable
+            // Adds mouse events for each hoverable element
             hoverableElements.forEach(hoverableElement => {
                 hoverableElement.addEventListener('mouseover', () => {
                     const eventDetails = hoverableElement.nextElementSibling;
@@ -140,6 +138,7 @@ function removeEventFromLocalStorage(eventTitle) {
     const updatedEvents = events.filter(event => event.eventTitle !== eventTitle);
     localStorage.setItem('events', JSON.stringify(updatedEvents));
 }
+// Buttons for previous month and next month
 const checkPreviousBtn = () => {
     variables.currentMonth = variables.currentMonth === 0 ? 11 : variables.currentMonth - 1;
     if (variables.currentMonth === 11) {
@@ -153,6 +152,7 @@ const checkNextBtn = () => {
     }
 };
 const { prevBtn, nextBtn, calendarDays, removeEventButton } = domVariables;
+// Adds animation
 prevBtn.addEventListener('click', () => {
     checkPreviousBtn();
     calendarDays.classList.remove('flip-scale-up-hor');
@@ -170,6 +170,7 @@ nextBtn.addEventListener('click', () => {
     }, 0);
 });
 const { newEventModal, cancelButton, addEventButton, saveButton, closeModalButton, checkEndDate, endDateContainer, reminderContainer, checkRemindDate, reminderSelect, description, closeModalButtonTwo, eventDetailsModal } = domVariables;
+// Shows modal
 addEventButton.addEventListener('click', () => {
     newEventModal.classList.add('active');
     newEventModal.focus();
@@ -179,10 +180,9 @@ saveButton.addEventListener('click', () => {
     if (formVerification) {
         const newEvent = objectCreation();
         const events = getEventsFromLocalStorage();
-        console.log(events);
-        // Agrega el nuevo evento al arreglo de eventos
+        // Adds the new event to the event array
         events.push(newEvent);
-        // Guarda el arreglo de eventos actualizado en localStorage
+        // Saves in localstorage
         localStorage.setItem('events', JSON.stringify(events));
         if (newEvent.reminderSelect) {
             const remindDate = getReminderDate();
@@ -190,7 +190,7 @@ saveButton.addEventListener('click', () => {
                 checkReminder(remindDate, newEvent, intervalId);
             }, 10000);
         }
-        // Añade evento al día en el calendario
+        // Adds the event to the calendar
         renderCalendar();
         closeAndResetModal();
     }
@@ -220,6 +220,7 @@ const checkReminder = (remindDate, newEvent, intervalId) => {
         clearInterval(intervalId);
     }
 };
+// Creates object 
 const objectCreation = () => {
     const { eventTitle, initialDate, endDate, checkRemindDate, reminderSelect, description, eventType, checkEndDate } = domVariables;
     const newEvent = {
@@ -234,6 +235,7 @@ const objectCreation = () => {
     };
     return newEvent;
 };
+// Events for closing both modals
 cancelButton.addEventListener('click', closeAndResetModal);
 closeModalButton.addEventListener('click', closeAndResetModal);
 closeModalButtonTwo.addEventListener('click', closeAndResetModalTwo);
@@ -257,7 +259,7 @@ eventDetailsModal.addEventListener('keydown', (event) => {
         closeAndResetModalTwo();
     }
 });
-//event checkbox
+// Event checkbox
 checkEndDate.addEventListener('change', () => {
     if (endDateContainer.classList.contains('hide')) {
         endDateContainer.classList.remove('hide');
@@ -317,17 +319,18 @@ function getEventsFromLocalStorage() {
     const eventsString = localStorage.getItem('events');
     return eventsString ? JSON.parse(eventsString) : [];
 }
+// Function that highlights the incomplete/not valid fields in form
 function highlightIncompleteFields() {
     const { eventTitle, initialDate, endDateContainer, endDate, reminderContainer, reminderSelect, description } = domVariables;
-    // Función para resaltar en rojo un campo
+    // Highlights in red
     const highlightField = (field) => {
         field.style.border = '2px solid red';
     };
-    // Función para restaurar el estilo normal de un campo
+    // Restores the style
     const resetFieldStyle = (field) => {
         field.style.border = '';
     };
-    // Lógica para resaltar campos incompletos
+    // Incomplete fields
     if (!eventTitle.value || eventTitle.value.length > 60) {
         highlightField(eventTitle);
     }

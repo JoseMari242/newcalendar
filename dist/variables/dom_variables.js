@@ -6,11 +6,11 @@ export const domVariables = {
     calendarDays: document.getElementById('days'),
     //new event button
     addEventButton: document.getElementById('showModal'),
-    //modal elements 
+    //modal 1 elements 
     newEventModal: document.getElementById('newEventModal'),
     closeModalButton: document.getElementById('closeModal'),
     closeModalButtonTwo: document.getElementById('closeModalTwo'),
-    //form elements
+    //form elements (modal 1)
     newEventForm: document.getElementById('newEventForm'),
     eventTitle: document.getElementById('eventTitle'),
     initialDate: document.getElementById('initialDate'),
@@ -22,9 +22,10 @@ export const domVariables = {
     reminderSelect: document.getElementById('reminder'),
     description: document.getElementById('description'),
     eventType: document.getElementById('eventType'),
-    //modal footer
+    //modal 2 footer
     cancelButton: document.getElementById('cancelButton'),
     saveButton: document.getElementById('saveButton'),
+    //event details (modal 2)
     eventDetailsModal: document.getElementById('eventDetailsModal'),
     eventTitleDisplay: document.getElementById('eventTitleDisplay'),
     initialDateDisplay: document.getElementById('initialDateDisplay'),
