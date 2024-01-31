@@ -1,202 +1,28 @@
-/*html {
-  font-size: 62.5%;
-}
-
-:root {
-  --gray-background: #373c4f;
-  --white-page-calendar:#f9f9f9;
-  --lessdark-gray:#393e51;
-  --calendar-shadow:#94979f;
-  --font-on-white:#363a40;
-  --font-on-darkgrey:#dee0e6;
-  --highlight-in-grey: faelinear-gradient(#b38ad6,#373c4f);
-  --highlight-in-white: #b38ad6;
-  --general-background: #e9e8e4;
-
-}
-
-body {
-  font-family: 'Roboto', sans-serif;
-  font-family: 'Ubuntu', sans-serif;
-  box-sizing: border-box;
-  font-size: 1.6rem;
-  margin: 0;
-  padding: 0;
-  min-height: 100vh;
-}
-
-.calendar {
-  width: auto;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  color: var(--font-on-white);
-}
-
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem;
-  border-radius: 0.3rem;
-  color: var(--font-on-white);
-  
-}
-
-.weekdays {
-  display: grid;
-  grid-template-columns: auto auto auto auto auto auto auto;
-}
-
-.weekdays span {
-  text-align: center;
-  margin-bottom: 1rem;
-  font-weight: 700;
-}
-
-.presentDay {
-  background-color: red;
-}
-
-button {
-  background-color: #007BFF;
-  color: #fff;
-  border: none;
-  padding: 0.5rem 1rem;
-  cursor: pointer;
-  border-radius: 0.5rem;
-}
-
-button:hover {
-  background-color: #0056b3;
-}
-
-.days {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 0.1rem;
-}
-
-
-
-.day {
-  padding: 1rem;
-  text-align: center;
-  border: 0.1rem solid #eee;
-  color: var(--font-on-white);
-  transition: 0.5s;
-}
-
-.day:hover {
-  background-color: var(--highlight-in-white);
-  color: var(--lessdark-gray);
-  opacity: 0.5;
-}
-
-.day:active {
-  background-color: var(--highlight-in-white);
-  color: var(--font-on-darkgrey);
-  font-size:large;
-  font-weight: bold;
-  box-shadow: 0.3 0.3 0.3 var(--calendar-shadow);
-}
-
-/* .event {
-  background-color: #28a745;
-  color: #fff;
-  border-radius: 3px;
-  padding: 2px;
-} */
-
-/* Modal New Event 
-
-.modal {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-}
-
-.active {
-  display: block;
-}
-
-.modal__container{
-  background-color: #fff;
-  margin: 5% auto;
-  padding: 20px;
-  border: 1px solid #888;
-  width: 30%;
-}
-
-.modal__close {
-  color: #aaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.modal__close:hover,
-.modal__close:focus {
-  color: black;
-  text-decoration: none;
-}
-
-.modal__form {
-  display:flex;
-  flex-direction: column;
-  flex-wrap: nowrap;
-}
-
-.hide {
-  display: none;
-}
-
-.event-day {
-  background-color: #ffc107; 
-  color: #000;
-  font-weight: bold;
-}
-
-.event-text {
-  font-size: 12px;
-  color: #ffffff;
-  background-color: #3498db; 
-  border-radius: 4px;
-  margin-top: 2px;
-}
-
-.eventDay.hidden {
-  display: none;
-}*/
-
 html {
   font-size: 62.5%;
 }
 
 :root {
-  --color-background: #A9C7CF; /* update */
+  --color-background: #2d353c; 
   --white-page-calendar:#f9f9f9;
   --color-primary:#0E9191;
   --color-secondary: #E8AE49;
   --color-hover: #43987F;
   --font-on-darkgrey:#dee0e6;
-  --highlight-in-grey: faelinear-gradient(#b38ad6,#373c4f);
-  --highlight-in-white: #b38ad6;
+  --highlight-in-grey: #a3b89f;
+  --highlight-in-white:#3f4e72;
+  --font-for-months: #94946d; 
+  --button: #368fcc;
 
 }
 
 body {
-  font-family: 'Roboto', sans-serif;
-  font-family: 'Ubuntu', sans-serif;
+  font-family: 'Handlee', cursive;
   box-sizing: border-box;
   font-size: 1.6rem;
   margin: 0;
   padding: 0;
-  min-height: 100vh;
+  max-height: 100vh;
   background-image: linear-gradient(200deg, #0e9191 21%, #e8ae49 69%);
 }
 
@@ -204,13 +30,15 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 1rem;
+  margin: 0.5rem;
+  max-height: 20vh;
 }
 
 .title h1{
-  font-size: 6rem;
+  font-size: 4.5rem;
   -webkit-animation: text-focus-in 1s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
 	        animation: text-focus-in 1s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
+  margin-bottom: 0.7rem;
 }
 
 
@@ -241,27 +69,26 @@ body {
 }
 
 
-
-
 .showModal{
   background-color: var(--color-secondary);
   color: var(--white-page-calendar);
-  font-size: 2rem;
+  font-size: 1.6rem;
   font-weight: 700;
-  transition: all 1s ease;
+  transition: all 0.6s ease;
 }
 
 .showModal:hover{
   background-color: var(--color-background);
   scale: 1.1;
-  color: #000;
+  color: var(--color-secondary);
 }
 
 .mainCalendar{
   background-color: var(--color-background);
-  max-width: 80%;
-  margin: 5% auto;
-  min-height: 60rem;
+  max-width: 60%;
+  margin: 2% auto 1.2rem auto;
+  height: 75vh;
+  max-height: 75vh;
   border-radius: 1rem;
 }
 
@@ -269,32 +96,40 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem;
+  padding: 0.5rem;
   border-radius: 0.3rem;
-  color: var(--font-on-white);
-  font-size: 3rem;
+  color: var(--font-for-months);
+  font-size: 2rem;
+  max-height:10vh;
+
 }
 
 .prevMonth, .nextMonth{
   background-color: var(--color-primary);
-  font-size: 3rem;
-  transition: all 1s ease;
+  font-size: 2rem;
+  transition: all 0.3s ease;
+  margin-left: 5rem;
+  margin-right: 5rem;
 }
 
 .prevMonth:hover, .nextMonth:hover{
- background-color: #E8AE49;
+ background-color: #aca45c;
+
 }
 
 .weekdays {
   display: grid;
   grid-template-columns: auto auto auto auto auto auto auto;
-  font-size: 2rem;
+  font-size: 1.6rem;
+  color:var(--font-on-darkgrey);
+  margin-bottom: 0.5rem;
 }
 
 .weekdays span {
   text-align: center;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
   font-weight: 700;
+  padding: 0.3rem;
 }
 
 .presentDay {
@@ -302,13 +137,20 @@ body {
 }
 
 button {
-  background-color: #007BFF;
-  color: #fff;
+  background-color: var(--button);
+  color: var(--font-on-darkgrey);
   border: none;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 0.5rem;
   cursor: pointer;
   border-radius: 0.5rem;
+  flex-shrink: 1;
 }
+
+form button {
+  margin-top: 1rem;
+}
+
+
 
 button:hover {
   background-color: #0056b3;
@@ -318,23 +160,29 @@ button:hover {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   gap: 0.1rem;
-  min-height: 50rem;
+  min-height: 40vh;
+  padding: 0.3rem;
 }
 
 .day {
-  padding: 1rem;
+  padding: 0.3rem;
   text-align: center;
-  border: 0.1rem solid #eee;
-  color: var(--font-on-white);
-  transition: 0.5s;
+  /*border: 0.1rem solid #eee;*/
+  color: var(--font-for-months);
+  transition: 0.3s;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  transition: all 2s ease;
+  gap: 0.3rem;
+  transition: all 0.6s ease;
+  height: 8.5vh;
+  overflow-y: hidden;
 }
 
 .day:hover {
   background-color: var(--color-primary);
+  border-radius: 0.3rem;
+  cursor: pointer;
+  box-shadow: rgba(252, 251, 251, 0.2) 0px 12px 28px 0px, rgba(253, 252, 252, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset;
   opacity: 0.8;
 }
 
@@ -351,13 +199,13 @@ button:hover {
   color: #fff;
   border-radius: 3px;
   padding: 2px;
-} */
+} 
 
 /* Modal New Event */
 
 .modal {
   display: none;
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
@@ -374,12 +222,56 @@ button:hover {
   margin: 5% auto;
   padding: 20px;
   border: 1px solid #888;
+  border-radius: 0.5rem;
   width: 30%;
+  font-weight: bold;
+  color: #949471;
+}
+
+
+
+.modal__container h2 {
+  margin-top: 3rem;
+  color: black;
+  font-weight: bold;
+}
+
+.modal__container input:nth-child(2n) {
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+  border-style: none;
+  border-bottom: var(--color-background) 0.2rem solid;
+}
+
+.modal__container label {
+  width: fit-content;
+}
+
+.modal__form select {
+  border-radius: 0.3rem;
+  padding: 0.2rem;
+  margin-top: 0.5rem;
+}
+
+.modal__form__remainder {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.modal__form textarea {
+  border: var(--color-background) 0.2rem solid;
+  margin-bottom: 0.5rem;
+}
+.checkbox__label__container {
+  display: flex;
 }
 
 .modal__close {
   color: #aaa;
-  float: right;
+  position: fixed;
+  top: 5;
+  right: inherit;
+  margin-left: 28%;
   font-size: 28px;
   font-weight: bold;
   cursor: pointer;
@@ -402,22 +294,32 @@ button:hover {
 }
 
 .event-day {
-  background-color: var(--color-secondary);
+  background-color: var(--highlight-in-white);
   color: #000;
   font-weight: bold;
+  flex-shrink: 1;
+  border-radius: 0.3rem;
 }
 
 .event-text {
-  font-size: 1.5rem;
+  font-size: 0.8rem;
   color: black; /* color del texto del evento */
-  background-color: var(--color-background); /* color de fondo del texto del evento */
-  padding: 2px 4px;
-  border-radius: 4px;
-  margin-top: 2px;
+  background-color: var(--highlight-in-grey); /* color de fondo del texto del evento */
+  padding: 0.1rem 0.2rem;
+  border-radius: 0.3rem;
+  margin-top: 0.1rem;
 }
+
 
 .eventDay.hidden {
   display: none;
+  font-size: 1rem;
+}
+
+.eventDay {
+  font-size: 1rem;
+  padding: 0.3rem;
+  margin: 0.8rem;
 }
 
 
@@ -467,4 +369,6 @@ button:hover {
             transform: rotate(360deg);
   }
 }
+
+
 

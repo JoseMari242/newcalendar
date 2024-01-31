@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Handlee&display=swap" rel="stylesheet">
     <title>Event Calendar JS</title>
 </head>
 <body>
@@ -44,15 +47,20 @@
                   <label for="initialDate">Initial Date:</label>
                   <input type="datetime-local" name="initialDate" id="initialDate">
                 </div>
+                <div class="checkbox__label__container">
                 <label for="checkEndDate">End Date</label>
                 <input type="checkbox" name="checkEndDate" id="checkEndDate">
+                </div>
+
                 <div class="modal__form__checkend hide" id="endDateContainer">
                   <label for="endDate">End Date:</label>
                   <input type="datetime-local" name="endDate" id="endDate">
                 </div>
 
+                <div class="checkbox__label__container">
                 <label for="remindDate">Remind me when this event expires</label>
                 <input type="checkbox" name="remindDate" id="checkRemindDate">
+                </div>
                 <div class="modal__form__reminder hide" id="reminderContainer">
                   <label for="reminder">Reminder:</label>
                   <select name="reminder" id="reminder">
