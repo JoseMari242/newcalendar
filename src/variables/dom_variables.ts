@@ -9,6 +9,7 @@ export const domVariables = {
   //modal elements 
   newEventModal: document.getElementById('newEventModal') as HTMLDivElement,
   closeModalButton: document.getElementById('closeModal') as HTMLButtonElement,
+  closeModalButtonTwo: document.getElementById('closeModalTwo') as HTMLButtonElement,
   //form elements
   newEventForm: document.getElementById('newEventForm') as HTMLFormElement,
   eventTitle: document.getElementById('eventTitle') as HTMLFormElement,
@@ -23,5 +24,13 @@ export const domVariables = {
   eventType: document.getElementById('eventType') as HTMLFormElement,
   //modal footer
   cancelButton: document.getElementById('cancelButton') as HTMLButtonElement,
-  saveButton: document.getElementById('saveButton') as HTMLButtonElement
+  saveButton: document.getElementById('saveButton') as HTMLButtonElement,
+  eventDetailsModal: document.getElementById('eventDetailsModal') as HTMLDivElement,
+  eventTitleDisplay: document.getElementById('eventTitleDisplay') as HTMLHeadingElement,
+  initialDateDisplay: document.getElementById('initialDateDisplay') as HTMLSpanElement,
+  endDateDisplay: document.getElementById('endDateDisplay') as HTMLSpanElement,
+  descriptionDisplay: document.getElementById('descriptionDisplay') as HTMLSpanElement,
+  reminderDisplay: document.getElementById('reminderDisplay') as HTMLSpanElement,
+  eventTypeDisplay: document.getElementById('eventTypeDisplay') as HTMLSpanElement,
+  removeEventButton: document.getElementById('removeEventButton') as HTMLButtonElement,
 };

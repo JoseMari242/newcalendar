@@ -9,15 +9,15 @@
 <body>
 
   <header class="title">
-    <h1>JS Calendar</h1>
-    <button id="showModal">New Event</button>
+    <h1>Calendar Turing</h1>
+    <button id="showModal" class="showModal">New Event</button>
   </header>
 
-  <main>
+  <main class="mainCalendar">
     <div class="header">
-      <button id="prevMonth">&#5130;</button>
+      <button id="prevMonth" class="prevMonth">&#5130;</button>
       <h2 id="currentMonth"></h2>
-      <button id="nextMonth">&#5125;</button>
+      <button id="nextMonth" class="nextMonth">&#5125;</button>
     </div>
     
     <div class="weekdays">
@@ -84,6 +84,21 @@
         </div>
     </div>
 
+    <div class="modal" id="eventDetailsModal" tabindex="0">
+      <div class="modal__container">
+          <span class="modal__close" id="closeModalTwo">&times;</span>
+          <h2 id="eventTitleDisplay"></h2>
+          <span id="initialDateDisplay"></span>
+          <span id="reminderDisplay"></span>
+          <span id="eventTypeDisplay"></span>
+          <span id="endDateDisplay"></span>
+          <span id="descriptionDisplay"></span>
+        <div class="modal__footer">
+          <button type="button" id="removeEventButton">Remove</button>
+        </div>
+      </div>
+  </div>
+    
 
 
 

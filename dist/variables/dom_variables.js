@@ -9,6 +9,7 @@ export const domVariables = {
     //modal elements 
     newEventModal: document.getElementById('newEventModal'),
     closeModalButton: document.getElementById('closeModal'),
+    closeModalButtonTwo: document.getElementById('closeModalTwo'),
     //form elements
     newEventForm: document.getElementById('newEventForm'),
     eventTitle: document.getElementById('eventTitle'),
@@ -23,5 +24,13 @@ export const domVariables = {
     eventType: document.getElementById('eventType'),
     //modal footer
     cancelButton: document.getElementById('cancelButton'),
-    saveButton: document.getElementById('saveButton')
+    saveButton: document.getElementById('saveButton'),
+    eventDetailsModal: document.getElementById('eventDetailsModal'),
+    eventTitleDisplay: document.getElementById('eventTitleDisplay'),
+    initialDateDisplay: document.getElementById('initialDateDisplay'),
+    endDateDisplay: document.getElementById('endDateDisplay'),
+    descriptionDisplay: document.getElementById('descriptionDisplay'),
+    reminderDisplay: document.getElementById('reminderDisplay'),
+    eventTypeDisplay: document.getElementById('eventTypeDisplay'),
+    removeEventButton: document.getElementById('removeEventButton'),
 };
