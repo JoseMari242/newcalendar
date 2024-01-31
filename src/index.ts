@@ -100,7 +100,7 @@ function renderCalendar(): void {
        initialDateDisplay.innerText = `Initial Date: ${firstEventinitialDate}`;
        if (firstEventendDate) endDateDisplay.innerText = `End Date: ${firstEventendDate}`;
        if (firstEventDescription) descriptionDisplay.innerText = `Description: ${firstEventDescription}`;
-       if (firstEventReminder) reminderDisplay.innerText = `Reminder Time: ${firstEventReminder}`;
+       if (firstEventReminder) reminderDisplay.innerText = `Remind event ${firstEventReminder} minutes before`;
        eventTypeDisplay.innerText = `Event Type: ${firstEventEventType}`;
        removeEventButton.addEventListener('click', () => {
         const eventTitleToRemove = eventTitleDisplay.innerText;
