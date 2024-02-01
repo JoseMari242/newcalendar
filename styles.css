@@ -321,6 +321,11 @@ button:hover {
   display: none; 
 }
 
+.hoverable:hover + p {
+  font-size: xx-small;
+  display: block !important;
+}
+
 .modal__container {
   display: flex;
   flex-direction: column;
